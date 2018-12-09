@@ -1,16 +1,16 @@
 version: 2
 jobs:
-  dependencies:
-    override:
-    - mvn -DskipTests clean install dependency:resolve-plugins dependency:go-offline
-
-  test:
-    override:
-    - mvn -o surefire:test
-
-  deployment:
-    main:
-      branch: master
-      commands:
-      - mvn -s .circleci.settings.xml -DskipTests deploy
-
+  build:
+    working_directory: ~/localstack-circleci-example
+  docker:
+    - image: circleci/openjdk:8-jdk
+   steps:
+    - checkout
+    - restore_cache:
+        key: localstack-circleci-example-{{ checksum "pom.xml" }}
+    - run: mvn dependency:go-offline
+    - save_cache:
+        paths:
+        - ~/.m2
+        key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
+    - run: mvn test
