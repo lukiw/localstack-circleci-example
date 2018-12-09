@@ -1,20 +1,20 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/localstack-circleci-example
-  docker:
-    - image: circleci/openjdk:8-jdk-browsers
-  steps:
-    dependencies:
-      override:
-      - mvn -DskipTests clean install dependency:resolve-plugins dependency:go-offline
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      dependencies:
+        override:
+        - mvn -DskipTests clean install dependency:resolve-plugins dependency:go-offline
 
-    test:
-      override:
-      - mvn -o surefire:test
+      test:
+        override:
+        - mvn -o surefire:test
 
-    deployment:
-      main:
-        branch: master
-        commands:
-        - mvn -s .circleci.settings.xml -DskipTests deploy
+      deployment:
+        main:
+          branch: master
+          commands:
+          - mvn -s .circleci.settings.xml -DskipTests deploy
+
