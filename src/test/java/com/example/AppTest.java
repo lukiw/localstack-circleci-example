@@ -13,10 +13,13 @@ import org.junit.runner.RunWith;
 
 @RunWith(LocalstackTestRunner.class)
 @LocalstackDockerProperties(randomizePorts = true, services = { "dynamodb" })
-class AppTest {
+public class AppTest {
+
+    public AppTest() {
+    }
 
     @Test
-    void doIt() {
+    public void doIt() {
         AmazonDynamoDB dynamoDB = DockerTestUtils.getClientDynamoDb();
         App app = new App(dynamoDB);
 
@@ -24,7 +27,7 @@ class AppTest {
     }
 
     @Test
-    void doQuery() {
+    public void doQuery() {
         AmazonDynamoDB dynamoDB = DockerTestUtils.getClientDynamoDb();
         App app = new App(dynamoDB);
 
