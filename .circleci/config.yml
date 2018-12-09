@@ -1,16 +1,15 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/localstack-circleci-example
-  docker:
-    - image: circleci/openjdk:8-jdk
-   steps:
-    - checkout
-    - restore_cache:
-        key: localstack-circleci-example-{{ checksum "pom.xml" }}
-    - run: mvn dependency:go-offline
-    - save_cache:
-        paths:
-        - ~/.m2
-        key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
-    - run: mvn test
+build:
+docker:
+- image: circleci/openjdk:8-jdk
+steps:
+- checkout
+- restore_cache:
+  key: localstack-circleci-example-{{ checksum "pom.xml" }}
+- run: mvn dependency:go-offline
+- save_cache:
+  paths:
+  - ~/.m2
+  key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
+- run: mvn test
