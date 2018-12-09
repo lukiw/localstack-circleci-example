@@ -1,1 +1,9 @@
 version: 2
+jobs:
+  build:
+    working_directory: ~/localstack-circleci-example
+  docker:
+    - image: circleci/openjdk:8-jdk-browsers
+   steps:
+    - checkout
+    - run: mvn test
